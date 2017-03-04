@@ -5,6 +5,8 @@
 
 //My first commint to git...
 
+//and the second..
+
 int main(int argc, char *argv[])
 {
     QTime time = QTime::currentTime();
