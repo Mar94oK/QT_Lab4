@@ -3,6 +3,8 @@
 #include <QTime>
 #include <QGlobal.h>
 
+//My first commint to git...
+
 int main(int argc, char *argv[])
 {
     QTime time = QTime::currentTime();
