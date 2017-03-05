@@ -5,6 +5,7 @@
 #include "Figure.h"
 #include <QKeyEvent>
 #include "global_vars.h"
+//third commit
 
 Glass::Glass(QWidget *parent) : QWidget(parent)
 {
