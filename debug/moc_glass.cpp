@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Glass_t {
-    QByteArrayData data[20];
-    char stringdata0[274];
+    QByteArrayData data[21];
+    char stringdata0[288];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -46,11 +46,12 @@ QT_MOC_LITERAL(11, 111, 14), // "moveFigureDown"
 QT_MOC_LITERAL(12, 126, 14), // "moveFigureLeft"
 QT_MOC_LITERAL(13, 141, 15), // "moveFigureRight"
 QT_MOC_LITERAL(14, 157, 20), // "rotateFigureColorsUp"
-QT_MOC_LITERAL(15, 178, 31), // "CheckIfTherIsAPlaceForNewFigure"
-QT_MOC_LITERAL(16, 210, 12), // "countingCows"
-QT_MOC_LITERAL(17, 223, 28), // "refresh_glass_after_counting"
-QT_MOC_LITERAL(18, 252, 11), // "slotNewGame"
-QT_MOC_LITERAL(19, 264, 9) // "slotPause"
+QT_MOC_LITERAL(15, 178, 13), // "DropTheFigure"
+QT_MOC_LITERAL(16, 192, 31), // "CheckIfTherIsAPlaceForNewFigure"
+QT_MOC_LITERAL(17, 224, 12), // "countingCows"
+QT_MOC_LITERAL(18, 237, 28), // "refresh_glass_after_counting"
+QT_MOC_LITERAL(19, 266, 11), // "slotNewGame"
+QT_MOC_LITERAL(20, 278, 9) // "slotPause"
 
     },
     "Glass\0signalGlassInit\0\0nextFigureChanged\0"
@@ -58,7 +59,7 @@ QT_MOC_LITERAL(19, 264, 9) // "slotPause"
     "setColumns\0columns\0slotGlassInit\0"
     "moveFigureDown\0moveFigureLeft\0"
     "moveFigureRight\0rotateFigureColorsUp\0"
-    "CheckIfTherIsAPlaceForNewFigure\0"
+    "DropTheFigure\0CheckIfTherIsAPlaceForNewFigure\0"
     "countingCows\0refresh_glass_after_counting\0"
     "slotNewGame\0slotPause"
 };
@@ -70,31 +71,32 @@ static const uint qt_meta_data_Glass[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      15,   14, // methods
-       2,  112, // properties
+      16,   14, // methods
+       2,  118, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        3,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   89,    2, 0x06 /* Public */,
-       3,    1,   90,    2, 0x06 /* Public */,
-       5,    1,   93,    2, 0x06 /* Public */,
+       1,    0,   94,    2, 0x06 /* Public */,
+       3,    1,   95,    2, 0x06 /* Public */,
+       5,    1,   98,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       6,    1,   96,    2, 0x0a /* Public */,
-       8,    1,   99,    2, 0x0a /* Public */,
-      10,    0,  102,    2, 0x0a /* Public */,
-      11,    0,  103,    2, 0x0a /* Public */,
-      12,    0,  104,    2, 0x0a /* Public */,
-      13,    0,  105,    2, 0x0a /* Public */,
-      14,    0,  106,    2, 0x0a /* Public */,
-      15,    0,  107,    2, 0x0a /* Public */,
-      16,    0,  108,    2, 0x0a /* Public */,
-      17,    0,  109,    2, 0x0a /* Public */,
-      18,    0,  110,    2, 0x0a /* Public */,
-      19,    0,  111,    2, 0x0a /* Public */,
+       6,    1,  101,    2, 0x0a /* Public */,
+       8,    1,  104,    2, 0x0a /* Public */,
+      10,    0,  107,    2, 0x0a /* Public */,
+      11,    0,  108,    2, 0x0a /* Public */,
+      12,    0,  109,    2, 0x0a /* Public */,
+      13,    0,  110,    2, 0x0a /* Public */,
+      14,    0,  111,    2, 0x0a /* Public */,
+      15,    0,  112,    2, 0x0a /* Public */,
+      16,    0,  113,    2, 0x0a /* Public */,
+      17,    0,  114,    2, 0x0a /* Public */,
+      18,    0,  115,    2, 0x0a /* Public */,
+      19,    0,  116,    2, 0x0a /* Public */,
+      20,    0,  117,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -104,6 +106,7 @@ static const uint qt_meta_data_Glass[] = {
  // slots: parameters
     QMetaType::Void, QMetaType::UInt,    7,
     QMetaType::Void, QMetaType::UInt,    9,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -138,13 +141,14 @@ void Glass::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void 
         case 7: _t->moveFigureLeft(); break;
         case 8: _t->moveFigureRight(); break;
         case 9: _t->rotateFigureColorsUp(); break;
-        case 10: _t->CheckIfTherIsAPlaceForNewFigure(); break;
-        case 11: { int _r = _t->countingCows();
+        case 10: _t->DropTheFigure(); break;
+        case 11: _t->CheckIfTherIsAPlaceForNewFigure(); break;
+        case 12: { int _r = _t->countingCows();
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
-        case 12: { bool _r = _t->refresh_glass_after_counting();
+        case 13: { bool _r = _t->refresh_glass_after_counting();
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
-        case 13: _t->slotNewGame(); break;
-        case 14: _t->slotPause(); break;
+        case 14: _t->slotNewGame(); break;
+        case 15: _t->slotPause(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -221,13 +225,13 @@ int Glass::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 15)
+        if (_id < 16)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 15;
+        _id -= 16;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 15)
+        if (_id < 16)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 15;
+        _id -= 16;
     }
 #ifndef QT_NO_PROPERTIES
    else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty

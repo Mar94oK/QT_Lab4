@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->widget, &Glass::nextFigureChanged, ui->nextFigure, &NextFigure::setFigure);
     QObject::connect(ui->buttonPause, SIGNAL(clicked(bool)),ui->widget, SLOT(slotPause()));
     connect(ui->widget, &Glass::SomeCowsCounted, ui->scoreLCD, static_cast<void (QLCDNumber::*)(int)>(&QLCDNumber::display));
+
 }
 
 MainWindow::~MainWindow()

@@ -35,9 +35,6 @@ void Glass::clearGlass()
       m_fallTimerInterval = 300;
 }
 
-
-
-
 void Glass::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
@@ -60,12 +57,15 @@ void Glass::paintEvent(QPaintEvent *event)
 
 void Glass::slotNewGame()
 {
+    killTimer(this->curr_Timer);
+    this->clearGlass();
     m_gameOn = true;
     m_currentFigure.reset(new Figure());
     m_nextFigure.reset(new Figure());
     m_score = 0;
     curr_Timer = startTimer(m_fallTimerInterval);
     emit nextFigureChanged(m_nextFigure.get());
+    emit SomeCowsCounted(m_score);
     setFocus();
     qDebug() << "The game has started!!!";
 
@@ -122,8 +122,13 @@ void Glass::keyPressEvent(QKeyEvent *event)
         this->rotateFigureColorsUp();
         update();
     }
-}
 
+    if ((event->key() == Qt::Key_Space))
+    {
+        this->DropTheFigure();
+        update();
+    }
+}
 
 void Glass::moveFigureDown()
 {
@@ -163,6 +168,7 @@ void Glass::moveFigureDown()
 
         countingCows();
         refresh_glass_after_counting(); ///to search for...
+        while (countingCows()) {refresh_glass_after_counting();};
 
         CheckIfTherIsAPlaceForNewFigure();
 
@@ -214,6 +220,19 @@ void Glass::rotateFigureColorsUp()
     m_currentFigure->rotateColorsUP();
 }
 
+void Glass::DropTheFigure()
+{
+    killTimer(curr_Timer);
+    while ((m_currentFigure->bottom() != m_rows) &&
+           (glassArray[m_currentFigure->bottom()][m_currentFigure->column()] == emptyCell))
+    {
+        m_currentFigure->moveDown();
+    }
+    curr_Timer = startTimer(m_fallTimerInterval);
+
+
+}
+
 void Glass::CheckIfTherIsAPlaceForNewFigure()
 {
     if (glassArray[2][5] != emptyCell) //5 == start position! Make as a constant!
@@ -263,20 +282,34 @@ int Glass::countingCows()
     bool row_founded = false;
     //only in rows
     qDebug() << "F = " << current_m_i << "L = " << current_m_j;
+    int same_in_a_column = 0;
+    int same_in_a_row = 0;
+    int founded_start_same_position_f = -1;
+    int founded_start_same_position_l = -1;
+    bool found = false;
+    QColor curr_founded_color = emptyCell;
 
     for (int f = current_m_i; f < m_rows; f++) //-1?
     {
         qDebug() << "Counting Cows! Rows...";
         for (int l = current_m_j; l< m_columns-1; l++)
         {
+            same_in_a_column = 0;
+            same_in_a_row = 0;
+            //count_cows = 0;
             qDebug() << "Counting Cows! Colums...";
             if ((glassArray[f][l] == glassArray[f][l+1])
                     && (glassArray[f][l] != emptyCell))
             {
                 //check wether there are 3d,4th, 5th in a row...
+                if (!found) {
+                    founded_start_same_position_l = l; //define the start for the vertial sys
+                    founded_start_same_position_f = f;
+                    found = true;
+                }
                 int curr_found_l = l+2;
-                int same_in_a_row = 2;
-                QColor curr_founded_color = glassArray[f][l+1];
+                same_in_a_row = 2;
+                curr_founded_color = glassArray[f][l+1];
                 for (int j = curr_found_l; j < m_columns-1; j++)
                 {
                     if (glassArray[f][j] == curr_founded_color)
@@ -291,10 +324,110 @@ int Glass::countingCows()
                 }
                 qDebug() << "Same in a row = " << same_in_a_row;
 
+                for (int y = 0; y < same_in_a_row; y++)
+                {
+                    //up!
+                    for (int z = f; z >=1; --z)
+                    {
+                        if ((glassArray[z-1][l+y]) == curr_founded_color)
+                        {
+                            ++same_in_a_column;
+                            glassArray[z-1][l+y] = emptyCell;
+                            //left_check
+                            for (int k = l+y; k > 1; --k )
+                            {
+                                if ((glassArray[z-1][k-1])== curr_founded_color)
+                                {
+                                    ++same_in_a_column;
+                                    glassArray[z-1][k-1] = emptyCell;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+
+                            //right_check
+                            for (int s = l+y; s < m_columns-1; ++s )
+                            {
+                                if ((glassArray[z-1][s+1])== curr_founded_color)
+                                {
+                                    ++same_in_a_column;
+                                    glassArray[z-1][s+1] = emptyCell;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            break; // get out from here
+                        }
+                     }
+                    //down!
+                    for (int g = f; g < m_rows -1; ++g)
+                    {
+                        if ((glassArray[g+1][l+y]) == curr_founded_color)
+                        {
+                            ++same_in_a_column;
+                            glassArray[g+1][l+y] = emptyCell;
+
+                            //left_check
+                            for (int k = l+y; k > 1; --k )
+                            {
+                                if ((glassArray[g+1][k-1])== curr_founded_color)
+                                {
+                                    ++same_in_a_column;
+                                    glassArray[g+1][k-1] = emptyCell;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+
+                            //right_check
+                            for (int s = l+y; s < m_columns-1; ++s )
+                            {
+                                if ((glassArray[g+1][s+1])== curr_founded_color)
+                                {
+                                    ++same_in_a_column;
+                                    glassArray[g+1][s+1] = emptyCell;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+
+
+
+                        }
+                        else
+                        {
+                            break;
+                        }
+
+                    }
+                    //we are done here
+
+                }
+
+
+
+
+
+                }
                 //glassArray[f][l] = emptyCell;
                 //glassArray[f][l+1] = emptyCell;
                 count_cows+=same_in_a_row;
-                m_score += count_cows; ///check if there'are multipile deletings...
+                count_cows+=same_in_a_column;
+
+
+
                 qDebug()<<"Same founded!!!" << count_cows;
                 //row_founded = true;
                 //break;
@@ -302,12 +435,10 @@ int Glass::countingCows()
             }
             current_m_j = 0;
             //if (row_founded) break;
-        }
-
     }
-
-
+    m_score += count_cows; ///check if there'are multipile deletings...
     emit SomeCowsCounted(m_score);
+
 
     return count_cows;
 }

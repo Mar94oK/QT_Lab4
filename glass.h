@@ -52,6 +52,8 @@ public slots:
     void moveFigureLeft();
     void moveFigureRight();
     void rotateFigureColorsUp();
+    void DropTheFigure();
+
     void CheckIfTherIsAPlaceForNewFigure();
     int  countingCows();
     bool refresh_glass_after_counting();
